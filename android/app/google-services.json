@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "747940277024",
+    "firebase_url": "https://pcchats.firebaseio.com",
+    "project_id": "pcchats",
+    "storage_bucket": "pcchats.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:747940277024:android:572c7bdafbf56719500545",
+        "android_client_info": {
+          "package_name": "com.rd.pcchatz"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "747940277024-057u9jpksgmqji29rcps698d2k59th84.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.rd.pcchatz",
+            "certificate_hash": "bc25c3326dd691f552c2a10fd145a142422a41b9"
+          }
+        },
+        {
+          "client_id": "747940277024-hb38rn5mgha8sm717ra45qugpt9h8m4v.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAQYZJ_hjujrIUAbzK4ry3oRl-sq9sNY7Y"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "747940277024-hb38rn5mgha8sm717ra45qugpt9h8m4v.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
