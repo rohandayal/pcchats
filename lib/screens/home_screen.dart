@@ -1,5 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+import 'package:pcchatz/support/register_notification.dart';
 import 'package:pcchatz/widgets/category_selector.dart';
 import 'package:pcchatz/screens/show_screen.dart';
 
@@ -13,6 +16,18 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+  final FirebaseMessaging firebaseMessaging = new FirebaseMessaging();
+  final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin = new FlutterLocalNotificationsPlugin();
+  
+  @override
+  void initState() { 
+    configLocalNotification(flutterLocalNotificationsPlugin);
+    if(_name == ' ') {
+      getUser(widget.user.uid);
+    }
+    super.initState();
+  }
+  
   String _name = ' ';
   int _screen = 0;
   dynamic _user;
@@ -30,17 +45,10 @@ class _HomeScreenState extends State<HomeScreen> {
         setState(() {
           _name = datasnapshot.data['fname'];
           _user = datasnapshot.data;
+          registerNotification(context, firebaseMessaging, flutterLocalNotificationsPlugin, _user['uid']);
         });
       }
     }).catchError((err) => print(err));
-  }
-  
-  @override
-  void initState() { 
-    if(_name == ' ') {
-      getUser(widget.user.uid);
-    }
-    super.initState();
   }
   
   @override

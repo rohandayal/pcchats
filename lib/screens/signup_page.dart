@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:pcchatz/models/user_model.dart';
 import 'package:pcchatz/screens/home_screen.dart';
 import 'package:pcchatz/widgets/google_sign_in_widget.dart';
 import 'package:theme_provider/theme_provider.dart';
@@ -47,8 +48,17 @@ class _SignupPageState extends State<SignupPage> {
     }
   }
 
+  // void setToken(fbuser) async {
+  //   var userToken = fbuser.user.getIdToken();
+  //   assert(await userToken != null);
+  //   Firestore.instance.collection('users').document(fbuser.user.uid).setData({
+  //     "tokenID": userToken.toString(),
+  //   });
+  // }
+
   @override
   Widget build(BuildContext context) {
+    bool _isSendingData = false;
     return Scaffold(
        appBar: AppBar(
          title: Text('Register'),
@@ -81,7 +91,6 @@ class _SignupPageState extends State<SignupPage> {
                  TextFormField(
                    decoration: InputDecoration(
                      labelText: 'Email*',
-                     hintText: 'a@b.com',
                    ),
                    controller: emailNameInputController,
                    keyboardType: TextInputType.emailAddress,
@@ -103,11 +112,12 @@ class _SignupPageState extends State<SignupPage> {
                    obscureText: true,
                    validator: pwdValidator,
                  ),
-                 RaisedButton(
+                  !_isSendingData ? RaisedButton(
                    child: Text('Register'),
                    color: Theme.of(context).primaryColor,
                    textColor: Colors.white,
                    onPressed: () {
+                     _isSendingData = true;
                      if(_registerFormKey.currentState.validate()) {
                        if(pwdNameInputController.text == confirmPwdNameInputController.text) {
                          FirebaseAuth.instance.createUserWithEmailAndPassword(
@@ -132,6 +142,7 @@ class _SignupPageState extends State<SignupPage> {
                               emailNameInputController.clear(),
                               pwdNameInputController.clear(),
                               confirmPwdNameInputController.clear(),
+                              _isSendingData = false
                             }).catchError((err) => print(err))
                          ).catchError((err) => print(err));
                       } else {
@@ -155,6 +166,8 @@ class _SignupPageState extends State<SignupPage> {
                       }
                     }
                   },
+                ) : CircularProgressIndicator(
+                  valueColor: AlwaysStoppedAnimation<Color>(Theme.of(context).primaryColor),
                 ),
                 SizedBox(
                   height: 20.0,

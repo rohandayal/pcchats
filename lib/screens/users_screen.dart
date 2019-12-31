@@ -102,7 +102,13 @@ class _UsersScreenState extends State<UsersScreen> {
             stream: Firestore.instance.collection('users').snapshots(),
             builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
               if(snapshot.connectionState == ConnectionState.waiting) {
-                return Center(child: CircularProgressIndicator(),);
+                return Center(
+                  child: Container(
+                    child: Expanded(child: CircularProgressIndicator(
+                      valueColor: AlwaysStoppedAnimation<Color>(Theme.of(context).primaryColor),
+                    )),
+                  ),
+                );
               }
               if(!snapshot.hasData) {
                 return Center(

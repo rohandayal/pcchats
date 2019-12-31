@@ -46,7 +46,9 @@ class _ChatScreenState extends State<ChatScreen> {
       storageReference.getDownloadURL().then((dlurl) {
         Firestore.instance.collection('messages').add({
           "sender": widget.user['uid'],
+          "senderName": widget.user['fname'],
           "receiver": widget.contact['uid'],
+          "receiverToken": widget.contact.data.containsKey('tokenID') ?  widget.contact['tokenID'] : '',
           "text": "",
           "time": FieldValue.serverTimestamp(),
           "unread": true,
@@ -116,7 +118,9 @@ class _ChatScreenState extends State<ChatScreen> {
     });
     Firestore.instance.collection('messages').add({
       "sender": widget.user['uid'],
+      "senderName": widget.user['fname'],
       "receiver": widget.contact['uid'],
+      "receiverToken": widget.contact.data.containsKey('tokenID') ?  widget.contact['tokenID'] : '',
       "text": msgInputController.text,
       "time": FieldValue.serverTimestamp(),
       "unread": true,

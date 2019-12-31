@@ -25,9 +25,10 @@ class _GoogleSignInButtonState extends State<GoogleSignInButton> {
     );
     final AuthResult authResult = await FirebaseAuth.instance.signInWithCredential(credential);
     FirebaseUser fbuser = authResult.user;
+    var userToken = fbuser.getIdToken();
     
     assert(!fbuser.isAnonymous);
-    assert(await fbuser.getIdToken() != null);
+    assert(await userToken != null);
     
     final FirebaseUser currentUser = await FirebaseAuth.instance.currentUser();
     assert(fbuser.uid == currentUser.uid);
@@ -38,6 +39,7 @@ class _GoogleSignInButtonState extends State<GoogleSignInButton> {
       "fname": currentUser.displayName,
       "email": currentUser.email,
       "imageURL": currentUser.photoUrl,
+      "tokenID": userToken.toString(),
     });
     return currentUser.uid;
   }
